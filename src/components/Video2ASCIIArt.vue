@@ -1,7 +1,7 @@
 <template>
     <div class="video-container">
-        <video style="width: 100%" :src="videoURL" controls="controls" ref="videoDOMRef"></video>
-        <canvas width="" height=""></canvas>
+        <video style="width:100%;" :src="videoURL" controls="controls" ref="videoDOMRef"></video>
+        <canvas :width="canvasW" :height="canvasH"></canvas>
     </div>
 </template>
 
@@ -15,10 +15,25 @@ export default {
         }
     },
     data() {
-        return {}
+        return {
+            canvasW: 0,
+            canvasH: 0
+        }
     },
     mounted() {
-        console.log(this.$refs.videoDOMRef)
+        this.setCanvasRect()
+    },
+    methods: {
+        setCanvasRect() {
+            this.$refs.videoDOMRef.addEventListener('canplay', () => {
+                const {
+                    width,
+                    height
+                } = this.$refs.videoDOMRef.getBoundingClientRect()
+                this.canvasW = width
+                this.canvasH = height
+            })
+        }
     }
 }
 </script>

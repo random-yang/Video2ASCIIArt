@@ -96,7 +96,7 @@ video.addEventListener(
 video.addEventListener(
     'ended',
     () => {
-        window.clearInterval(animationHook)
+        window.cancelAnimationFrame(animationHook)
     },
     false
 )
