@@ -1,21 +1,3 @@
-// 获取video 和 canvas 的引用
-let video = document.getElementById('v')
-let canvas = document.getElementById('c')
-let textArea = document.getElementById('text-area')
-
-// 获取canvas 2D上下文对象
-let ctx = canvas.getContext('2d')
-
-let vStyleWidth
-let vStyleHeight
-
-video.onloadedmetadata = function() {
-    canvas.width = video.videoWidth // 视频宽度
-    canvas.height = video.videoHeight // 视频高度
-    vStyleWidth = canvas.width
-    vStyleHeight = canvas.height
-}
-
 // 根据 rgb 值得到灰度值
 let getGray = (r, g, b) => {
     return 0.299 * r + 0.578 * g + 0.114 * b // 灰度值的浮点算法
@@ -49,7 +31,7 @@ let mapToChar = grayIndex => {
 }
 
 // 填充到textarea
-let image2char = (ctx, width, height) => {
+let frame2char = (ctx, width, height) => {
     // 获取canvas上的图像信息
     let imageData = ctx.getImageData(0, 0, width, height)
     let imageDataArr = imageData.data // 图像信息数组
@@ -67,36 +49,47 @@ let image2char = (ctx, width, height) => {
         }
         innerContext += '\n'
     }
-    textArea.value = innerContext
+    console.log(innerContext)
 }
 
-let animationHook // 暂停hook
-let draw = () => {
-    animationHook = requestAnimationFrame(draw)
-    // 从视频等间隔取样
-    ctx.drawImage(video, 0, 0, vStyleWidth, vStyleHeight)
-    // 生成的字符串输出到textarea
-    image2char(ctx, vStyleWidth, vStyleHeight)
-}
+// 生成的字符串输出到textarea
 
-video.addEventListener(
-    'play',
-    () => {
-        draw()
-    },
-    false
-)
-video.addEventListener(
-    'pause',
-    () => {
-        window.cancelAnimationFrame(animationHook)
-    },
-    false
-)
-video.addEventListener(
-    'ended',
-    () => {
-        window.cancelAnimationFrame(animationHook)
-    },
-    false
-)
+export default class Processor {
+    /**
+     *
+     * @param {VideoDOM} video
+     * @param {CanvasContext} ctx
+     */
+    constructor(video, canvas) {
+        this.video = video
+        this.canvas = canvas
+        this.ctx = canvas.getContext('2d')
+
+        this.frameLoader = document.createElement('canvas') // 提取视频帧
+        this.frameLoaderCtx = this.frameLoader.getContext('2d')
+
+        this.frameLoader.width = this.canvas.width
+        this.frameLoader.height = this.canvas.height
+    }
+
+    /**
+     * @description
+     * 更新当前画布上下文上的帧
+     */
+    update() {
+        // 获取视频帧信息
+        this.frameLoaderCtx.drawImage(
+            this.video,
+            0,
+            0,
+            this.canvas.width,
+            this.canvas.height
+        )
+
+        frame2char(
+            this.frameLoaderCtx,
+            this.frameLoader.width,
+            this.frameLoader.height
+        )
+    }
+}
