@@ -4,9 +4,8 @@ let getGray = (r, g, b) => {
 }
 
 // 灰度值映射到字符
-let mapToChar = grayIndex => {
-    const d = 16
-    let index = Math.floor(grayIndex / d)
+let mapToChar = grayValue => {
+    const maxGrayValue = 255
     const chars = [
         '@',
         'W',
@@ -27,6 +26,7 @@ let mapToChar = grayIndex => {
         '.',
         '`'
     ]
+    let index = Math.floor((chars.length * grayValue) / maxGrayValue)
     return chars[index]
 }
 
@@ -37,7 +37,7 @@ let frame2char = (ctx, width, height) => {
     let imageDataArr = imageData.data // 图像信息数组
     let imgDataWidth = imageData.width // 矩阵纬度
     let imgDataHeight = imageData.height
-    let innerContext = ''
+    let chars = ''
     for (let h = 0; h < imgDataHeight; h += 10) {
         for (let w = 0; w < imgDataWidth; w += 6) {
             let index = (w + imgDataWidth * h) * 4 // r b g a = 4个宽度
@@ -45,11 +45,11 @@ let frame2char = (ctx, width, height) => {
             let g = imageDataArr[index + 1]
             let b = imageDataArr[index + 2]
             const gray = getGray(r, g, b) // 得到灰度值
-            innerContext += `${mapToChar(gray)}` // 灰度值映射到字符
+            chars += `${mapToChar(gray)}` // 灰度值映射到字符
         }
-        innerContext += '\n'
+        chars += '\n'
     }
-    console.log(innerContext)
+    return chars
 }
 
 // 生成的字符串输出到textarea
@@ -58,7 +58,7 @@ export default class Processor {
     /**
      *
      * @param {VideoDOM} video
-     * @param {CanvasContext} ctx
+     * @param {Canvas} canvas
      */
     constructor(video, canvas) {
         this.video = video
@@ -86,10 +86,18 @@ export default class Processor {
             this.canvas.height
         )
 
-        frame2char(
+        let chars = frame2char(
             this.frameLoaderCtx,
             this.frameLoader.width,
             this.frameLoader.height
         )
+
+        const fontSize = 10
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        this.ctx.font = `${fontSize}px Courier`
+
+        chars.split('\n').forEach((row, index) => {
+            this.ctx.fillText(row, 0, index * fontSize)
+        })
     }
 }

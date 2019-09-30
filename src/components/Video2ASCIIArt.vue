@@ -1,7 +1,7 @@
 <template>
-    <div class="video-container">
-        <video style="width:100%;" :src="videoURL" controls="controls" ref="videoDOMRef" id="video"></video>
-        <canvas :width="canvasW" :height="canvasH" id="canvas"></canvas>
+    <div class="asciiart-container">
+        <video :src="videoURL" class="asciiart__video" controls="controls" ref="videoDOMRef"></video>
+        <canvas :width="canvasW" :height="canvasH" class="asciiart__canvas" ref="canvasDOMRef"></canvas>
     </div>
 </template>
 
@@ -9,14 +9,8 @@
 import Processor from './utils/Processor.js'
 import EventHandler from './utils/EventHandler.js'
 
-let canvas = null
-let video = null
-let animationHook = null
-let processor = null
-let handlers = []
-
 export default {
-    name: '',
+    name: 'Video2ASCIIArt',
     props: {
         videoURL: {
             type: String,
@@ -26,40 +20,45 @@ export default {
     data() {
         return {
             canvasW: 0,
-            canvasH: 0
+            canvasH: 0,
+            canvas: null,
+            video: null,
+            animationHook: null,
+            processor: null,
+            handlers: []
         }
     },
     mounted() {
         this.setCanvasRect()
-        canvas = document.getElementById('canvas')
-        video = document.getElementById('video')
+        this.canvas = this.$refs.canvasDOMRef
+        this.video = this.$refs.videoDOMRef
 
-        handlers.push(
-            new EventHandler(video, 'canplay', () => {
-                processor = new Processor(video, canvas)
+        this.handlers.push(
+            new EventHandler(this.video, 'canplay', () => {
+                this.processor = new Processor(this.video, this.canvas)
             })
         )
 
-        handlers.push(
-            new EventHandler(video, 'play', () => {
+        this.handlers.push(
+            new EventHandler(this.video, 'play', () => {
                 this.draw()
             })
         )
 
-        handlers.push(
-            new EventHandler(video, 'pause', () => {
-                cancelAnimationFrame(animationHook)
+        this.handlers.push(
+            new EventHandler(this.video, 'pause', () => {
+                cancelAnimationFrame(this.animationHook)
             })
         )
 
-        handlers.push(
-            new EventHandler(video, 'ended', () => {
-                cancelAnimationFrame(animationHook)
+        this.handlers.push(
+            new EventHandler(this.video, 'ended', () => {
+                cancelAnimationFrame(this.animationHook)
             })
         )
     },
     destroyed() {
-        handlers.forEach(handler => {
+        this.handlers.forEach(handler => {
             handler.destroy()
         })
     },
@@ -76,15 +75,28 @@ export default {
         },
 
         draw() {
-            processor.update()
-            animationHook = requestAnimationFrame(this.draw)
+            this.processor.update()
+            this.animationHook = requestAnimationFrame(this.draw)
         }
     }
 }
 </script>
 
 <style scoped lang="scss">
-.video-container {
+.asciiart-container {
     width: 100%;
+    position: relative;
+}
+
+.asciiart__video {
+    width: 100%;
+    opacity: 0;
+}
+
+.asciiart__canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
 }
 </style>

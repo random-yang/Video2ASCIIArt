@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="video-wrapper">
-            <Video2ASCIIArt :videoURL="videoURL"/>
+            <Video2ASCIIArt :videoURL="videoURL_2"/>
         </div>
     </div>
 </template>
@@ -9,6 +9,7 @@
 <script>
 import Video2ASCIIArt from './components/Video2ASCIIArt'
 import videoURL from './assets/V.mov'
+import videoURL_2 from './assets/ALEM.mov'
 
 export default {
     name: 'app',
@@ -17,7 +18,8 @@ export default {
     },
     data() {
         return {
-            videoURL
+            videoURL,
+            videoURL_2
         }
     }
 }
@@ -31,6 +33,6 @@ export default {
     color: #2c3e50;
 }
 .video-wrapper {
-    width: 80vw;
+    width: 100%;
 }
 </style>

@@ -1,4 +1,5 @@
 module.exports = {
+    publicPath: './',
     configureWebpack: {
         module: {
             rules: [
@@ -8,7 +9,7 @@ module.exports = {
                         {
                             loader: 'file-loader',
                             options: {
-                                name: '[name].[ext]'
+                                name: '[path][name].[ext]'
                             }
                         }
                     ]
