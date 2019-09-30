@@ -30,30 +30,6 @@ let mapToChar = grayValue => {
     return chars[index]
 }
 
-// 填充到textarea
-let frame2char = (ctx, width, height) => {
-    // 获取canvas上的图像信息
-    let imageData = ctx.getImageData(0, 0, width, height)
-    let imageDataArr = imageData.data // 图像信息数组
-    let imgDataWidth = imageData.width // 矩阵纬度
-    let imgDataHeight = imageData.height
-    let chars = ''
-    for (let h = 0; h < imgDataHeight; h += 10) {
-        for (let w = 0; w < imgDataWidth; w += 6) {
-            let index = (w + imgDataWidth * h) * 4 // r b g a = 4个宽度
-            let r = imageDataArr[index + 0]
-            let g = imageDataArr[index + 1]
-            let b = imageDataArr[index + 2]
-            const gray = getGray(r, g, b) // 得到灰度值
-            chars += `${mapToChar(gray)}` // 灰度值映射到字符
-        }
-        chars += '\n'
-    }
-    return chars
-}
-
-// 生成的字符串输出到textarea
-
 export default class Processor {
     /**
      *
@@ -70,6 +46,56 @@ export default class Processor {
 
         this.frameLoader.width = this.canvas.width
         this.frameLoader.height = this.canvas.height
+
+        this.RATE = 2
+    }
+
+    drawChars(chars, fontSize = 10) {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        this.ctx.font = `${fontSize}px Courier`
+
+        chars.split('\n').forEach((row, index) => {
+            this.ctx.fillText(row, 0, index * fontSize)
+        })
+    }
+
+    getFrameFromVideo() {
+        this.frameLoaderCtx.drawImage(
+            this.video,
+            0,
+            0,
+            this.canvas.width,
+            this.canvas.height
+        )
+    }
+
+    frameToChar() {
+        // 获取canvas上的图像信息
+        let imageData = this.frameLoaderCtx.getImageData(
+            0,
+            0,
+            this.frameLoader.width,
+            this.frameLoader.height
+        )
+        let imageDataArr = imageData.data // 图像信息数组
+        let imgDataWidth = imageData.width
+        let imgDataHeight = imageData.height
+        let chars = ''
+
+        const dh = 10 / this.RATE
+        const dw = 6 / this.RATE
+        for (let h = 0; h < imgDataHeight; h += dh) {
+            for (let w = 0; w < imgDataWidth; w += dw) {
+                let index = (w + imgDataWidth * h) * 4 // r b g a = 4个宽度
+                let r = imageDataArr[index + 0]
+                let g = imageDataArr[index + 1]
+                let b = imageDataArr[index + 2]
+                const gray = getGray(r, g, b) // 得到灰度值
+                chars += `${mapToChar(gray)}` // 灰度值映射到字符
+            }
+            chars += '\n'
+        }
+        return chars
     }
 
     /**
@@ -78,26 +104,8 @@ export default class Processor {
      */
     update() {
         // 获取视频帧信息
-        this.frameLoaderCtx.drawImage(
-            this.video,
-            0,
-            0,
-            this.canvas.width,
-            this.canvas.height
-        )
-
-        let chars = frame2char(
-            this.frameLoaderCtx,
-            this.frameLoader.width,
-            this.frameLoader.height
-        )
-
-        const fontSize = 10
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-        this.ctx.font = `${fontSize}px Courier`
-
-        chars.split('\n').forEach((row, index) => {
-            this.ctx.fillText(row, 0, index * fontSize)
-        })
+        this.getFrameFromVideo()
+        let chars = this.frameToChar()
+        this.drawChars(chars, 10 / this.RATE)
     }
 }

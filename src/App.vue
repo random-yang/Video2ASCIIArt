@@ -1,15 +1,14 @@
 <template>
     <div id="app">
         <div class="video-wrapper">
-            <Video2ASCIIArt :videoURL="videoURL_2"/>
+            <Video2ASCIIArt :videoURL="videoURL"/>
         </div>
     </div>
 </template>
 
 <script>
 import Video2ASCIIArt from './components/Video2ASCIIArt'
-import videoURL from './assets/V.mov'
-import videoURL_2 from './assets/ALEM.mov'
+import videoURL from './assets/ALEM.mov'
 
 export default {
     name: 'app',
@@ -18,8 +17,7 @@ export default {
     },
     data() {
         return {
-            videoURL,
-            videoURL_2
+            videoURL
         }
     }
 }
