@@ -6,8 +6,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-import Processor from './utils/Processor.js'
-import EventHandler from './utils/EventHandler.js'
+import Processor from './Processor.js'
+import EventHandler from '../../utils/EventHandler.js'
 
 export default {
     name: 'Video2ASCIIArt',
@@ -15,6 +15,10 @@ export default {
         videoURL: {
             type: String,
             default: ''
+        },
+        pxPerChar: {
+            type: Number,
+            default: 10
         }
     },
     data() {

@@ -9,6 +9,13 @@
 <script>
 import Video2ASCIIArt from './components/Video2ASCIIArt'
 import videoURL from './assets/ALEM.mov'
+import * as dat from 'dat.gui'
+
+// var gui = new dat.GUI()
+// gui.add(text, 'message')
+// gui.add(text, 'speed', -5, 5)
+// gui.add(text, 'displayOutline')
+// gui.add(text, 'explode')
 
 export default {
     name: 'app',

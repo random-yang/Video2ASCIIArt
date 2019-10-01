@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "dat.gui": "^0.7.6",
     "vue": "^2.6.10"
   },
   "devDependencies": {
