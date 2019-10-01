@@ -12,6 +12,14 @@ import EventHandler from '../../utils/EventHandler.js'
 export default {
     name: 'Video2ASCIIArt',
     props: {
+        videoElementOption: {
+            type: Object,
+            default() {
+                return {
+                    crossOrigin: ''
+                }
+            }
+        },
         videoURL: {
             type: String,
             default: ''
@@ -36,6 +44,7 @@ export default {
         this.setCanvasRect()
         this.canvas = this.$refs.canvasDOMRef
         this.video = this.$refs.videoDOMRef
+        this.video.crossOrigin = this.videoElementOption.crossOrigin
 
         this.handlers.push(
             new EventHandler(this.video, 'canplay', () => {

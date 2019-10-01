@@ -18,7 +18,7 @@ export default {
     },
     data() {
         return {
-            videoURL,
+            videoURL: 'http://vjs.zencdn.net/v/oceans.mp4',
             charPPI: 1
         }
     },
