@@ -37,9 +37,10 @@ export default class Processor {
      * @param {VideoDOM} video
      * @param {Canvas} canvas
      */
-    constructor(video, canvas) {
+    constructor(video, canvas, options) {
         this.video = video
         this.canvas = canvas
+        this.options = { charPPI: 1, ...options }
         this.ctx = canvas.getContext('2d')
 
         this.frameLoader = document.createElement('canvas') // 提取视频帧
@@ -47,8 +48,11 @@ export default class Processor {
 
         this.frameLoader.width = this.canvas.width
         this.frameLoader.height = this.canvas.height
+    }
 
-        this.RATE = 2
+    changeCharPPI(newRate) {
+        if (!this.options.charPPI) return
+        this.options.charPPI = newRate
     }
 
     drawChars(chars, fontSize = 10) {
@@ -83,8 +87,9 @@ export default class Processor {
         let imgDataHeight = imageData.height
         let chars = ''
 
-        const dh = 10 / this.RATE
-        const dw = 6 / this.RATE
+        const { charPPI } = this.options
+        const dh = 10 / charPPI
+        const dw = 6 / charPPI
         for (let h = 0; h < imgDataHeight; h += dh) {
             for (let w = 0; w < imgDataWidth; w += dw) {
                 let index = (w + imgDataWidth * h) * 4 // r b g a = 4个宽度
@@ -107,6 +112,6 @@ export default class Processor {
         // 获取视频帧信息
         this.getFrameFromVideo()
         let chars = this.frameToChar()
-        this.drawChars(chars, 10 / this.RATE)
+        this.drawChars(chars, 10 / this.options.charPPI)
     }
 }

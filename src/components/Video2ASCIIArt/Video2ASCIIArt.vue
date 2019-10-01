@@ -16,9 +16,9 @@ export default {
             type: String,
             default: ''
         },
-        pxPerChar: {
-            type: Number,
-            default: 10
+        charPPI: {
+            type: [Number, String],
+            default: 1
         }
     },
     data() {
@@ -39,7 +39,9 @@ export default {
 
         this.handlers.push(
             new EventHandler(this.video, 'canplay', () => {
-                this.processor = new Processor(this.video, this.canvas)
+                this.processor = new Processor(this.video, this.canvas, {
+                    charPPI: this.charPPI
+                })
             })
         )
 
@@ -66,6 +68,11 @@ export default {
             handler.destroy()
         })
     },
+    watch: {
+        charPPI(to) {
+            this.updateCharPPI(to)
+        }
+    },
     methods: {
         setCanvasRect() {
             this.$refs.videoDOMRef.addEventListener('canplay', () => {
@@ -77,10 +84,12 @@ export default {
                 this.canvasH = height
             })
         },
-
         draw() {
             this.processor.update()
             this.animationHook = requestAnimationFrame(this.draw)
+        },
+        updateCharPPI(newPPI) {
+            this.processor.changeCharPPI(newPPI)
         }
     }
 }

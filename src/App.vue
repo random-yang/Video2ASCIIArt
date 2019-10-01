@@ -1,21 +1,15 @@
 <template>
     <div id="app">
         <div class="video-wrapper">
-            <Video2ASCIIArt :videoURL="videoURL"/>
+            <Video2ASCIIArt :videoURL="videoURL" :charPPI="charPPI"/>
         </div>
     </div>
 </template>
 
 <script>
 import Video2ASCIIArt from './components/Video2ASCIIArt'
-import videoURL from './assets/ALEM.mov'
 import * as dat from 'dat.gui'
-
-// var gui = new dat.GUI()
-// gui.add(text, 'message')
-// gui.add(text, 'speed', -5, 5)
-// gui.add(text, 'displayOutline')
-// gui.add(text, 'explode')
+import videoURL from './assets/overtrue.mov'
 
 export default {
     name: 'app',
@@ -24,7 +18,23 @@ export default {
     },
     data() {
         return {
-            videoURL
+            videoURL,
+            charPPI: 1
+        }
+    },
+    mounted() {
+        this.initGatGui()
+    },
+    methods: {
+        initGatGui() {
+            let gui = new dat.GUI()
+            let data = this.$data
+            gui.add(data, 'charPPI', {
+                '@x0.5': 0.25,
+                '@x1': 0.5,
+                '@x2': 1,
+                '@x4': 2
+            })
         }
     }
 }
