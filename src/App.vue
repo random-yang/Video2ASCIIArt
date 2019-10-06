@@ -1,7 +1,10 @@
 <template>
     <div id="app">
+        <h1 class="app__title">
+            <img class="app__logo" src="./assets/logo.png" alt="logo">
+            <span>Video2ASCIIArt DEMO</span>
+        </h1>
         <div class="video-wrapper">
-            <h1>Video2ASCIIArt DEMO</h1>
             <Video2ASCIIArt :videoURL="videoURL" :charPPI="charPPI"/>
         </div>
     </div>
@@ -10,7 +13,7 @@
 <script>
 import Video2ASCIIArt from './components/Video2ASCIIArt'
 import * as dat from 'dat.gui'
-import videoURL from './assets/KBHD.mov'
+import videoURL from './assets/V.mov'
 
 export default {
     name: 'app',
@@ -57,5 +60,16 @@ export default {
 }
 h1 {
     margin: 2rem 0;
+}
+.app__logo {
+    width: 2rem;
+    margin-right: 1rem;
+    vertical-align: middle;
+}
+
+.app__title {
+    span {
+        vertical-align: middle;
+    }
 }
 </style>
