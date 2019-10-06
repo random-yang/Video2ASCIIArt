@@ -1,7 +1,13 @@
 <template>
     <div class="asciiart-container">
         <video :src="videoURL" class="asciiart__video" controls="controls" ref="videoDOMRef"></video>
-        <canvas :width="canvasW" :height="canvasH" class="asciiart__canvas" ref="canvasDOMRef"></canvas>
+        <canvas
+            :width="canvasW"
+            :height="canvasH"
+            :class="{'asciiart__canvas--playing': isPlay}"
+            class="asciiart__canvas"
+            ref="canvasDOMRef"
+        ></canvas>
     </div>
 </template>
 
@@ -37,7 +43,8 @@ export default {
             video: null,
             animationHook: null,
             processor: null,
-            handlers: []
+            handlers: [],
+            isPlay: false
         }
     },
     mounted() {
@@ -48,26 +55,30 @@ export default {
 
         this.handlers.push(
             new EventHandler(this.video, 'canplay', () => {
-                this.processor = new Processor(this.video, this.canvas, {
-                    charPPI: this.charPPI
-                })
+                this.processor =
+                    this.processor ||
+                    new Processor(this.video, this.canvas, {
+                        charPPI: +this.charPPI
+                    })
             })
         )
-
         this.handlers.push(
             new EventHandler(this.video, 'play', () => {
-                this.draw()
+                this.isPlay = true
+                this.loop()
             })
         )
 
         this.handlers.push(
             new EventHandler(this.video, 'pause', () => {
+                this.isPlay = false
                 cancelAnimationFrame(this.animationHook)
             })
         )
 
         this.handlers.push(
             new EventHandler(this.video, 'ended', () => {
+                this.isPlay = false
                 cancelAnimationFrame(this.animationHook)
             })
         )
@@ -93,12 +104,12 @@ export default {
                 this.canvasH = height
             })
         },
-        draw() {
-            this.processor.update()
-            this.animationHook = requestAnimationFrame(this.draw)
-        },
         updateCharPPI(newPPI) {
             this.processor.changeCharPPI(newPPI)
+        },
+        loop() {
+            this.processor.update()
+            this.animationHook = requestAnimationFrame(this.loop)
         }
     }
 }
@@ -106,19 +117,31 @@ export default {
 
 <style scoped lang="scss">
 .asciiart-container {
-    width: 100%;
+    width: 100vw;
     position: relative;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .asciiart__video {
-    width: 100%;
-    opacity: 0;
+    width: 40%;
+    transition: box-shadow 0.3s ease-out;
+    &:hover {
+        box-shadow: 4px 10px 30px rgba(0, 0, 0, 0.3);
+    }
 }
 
 .asciiart__canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
+    &--single-mode {
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+    }
+    background: black;
+    &--playing {
+        // background: while;
+    }
 }
 </style>

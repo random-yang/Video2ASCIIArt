@@ -1,6 +1,7 @@
 <template>
     <div id="app">
         <div class="video-wrapper">
+            <h1>Video2ASCIIArt DEMO</h1>
             <Video2ASCIIArt :videoURL="videoURL" :charPPI="charPPI"/>
         </div>
     </div>
@@ -9,7 +10,7 @@
 <script>
 import Video2ASCIIArt from './components/Video2ASCIIArt'
 import * as dat from 'dat.gui'
-import videoURL from './assets/overtrue.mov'
+import videoURL from './assets/KBHD.mov'
 
 export default {
     name: 'app',
@@ -18,15 +19,15 @@ export default {
     },
     data() {
         return {
-            videoURL: 'http://vjs.zencdn.net/v/oceans.mp4',
+            videoURL,
             charPPI: 1
         }
     },
     mounted() {
-        this.initGatGui()
+        this.initDatGui()
     },
     methods: {
-        initGatGui() {
+        initDatGui() {
             let gui = new dat.GUI()
             let data = this.$data
             gui.add(data, 'charPPI', {
@@ -40,14 +41,21 @@ export default {
 }
 </script>
 
-<style>
+<style lang='scss'>
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+}
 #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
+    text-align: center;
 }
-.video-wrapper {
-    width: 100%;
+h1 {
+    margin: 2rem 0;
 }
 </style>

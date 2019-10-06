@@ -39,8 +39,8 @@ export default class Processor {
      */
     constructor(video, canvas, options) {
         this.video = video
-        this.canvas = canvas
         this.options = { charPPI: 1, ...options }
+        this.canvas = canvas
         this.ctx = canvas.getContext('2d')
 
         this.frameLoader = document.createElement('canvas') // 提取视频帧
@@ -50,14 +50,16 @@ export default class Processor {
         this.frameLoader.height = this.canvas.height
     }
 
-    changeCharPPI(newRate) {
-        if (!this.options.charPPI) return
-        this.options.charPPI = newRate
+    changeCharPPI(newCharPPI) {
+        const { charPPI } = this.options
+        if (!charPPI) return
+        this.options.charPPI = newCharPPI
     }
 
     drawChars(chars, fontSize = 10) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.font = `${fontSize}px Courier`
+        this.ctx.fillStyle = `#ffffff`
 
         chars.split('\n').forEach((row, index) => {
             this.ctx.fillText(row, 0, index * fontSize)
@@ -69,8 +71,8 @@ export default class Processor {
             this.video,
             0,
             0,
-            this.canvas.width,
-            this.canvas.height
+            this.frameLoader.width,
+            this.frameLoader.height
         )
     }
 
@@ -111,7 +113,10 @@ export default class Processor {
     update() {
         // 获取视频帧信息
         this.getFrameFromVideo()
-        let chars = this.frameToChar()
-        this.drawChars(chars, 10 / this.options.charPPI)
+        // frame 信息转换为字符串
+        const chars = this.frameToChar()
+        const { charPPI } = this.options
+        // 绘制到 canvas 上下文
+        this.drawChars(chars, 10 / charPPI)
     }
 }
