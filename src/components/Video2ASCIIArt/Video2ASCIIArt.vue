@@ -117,15 +117,14 @@ export default {
 
 <style scoped lang="scss">
 .asciiart-container {
-    width: 100vw;
-    position: relative;
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
     align-items: center;
 }
 
 .asciiart__video {
-    width: 40%;
+    width: 80%;
     transition: box-shadow 0.3s ease-out;
     &:hover {
         box-shadow: 4px 10px 30px rgba(0, 0, 0, 0.3);

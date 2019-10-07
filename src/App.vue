@@ -13,7 +13,7 @@
 <script>
 import Video2ASCIIArt from './components/Video2ASCIIArt'
 import * as dat from 'dat.gui'
-import videoURL from './assets/V.mov'
+import videoURL from './assets/KBHD.mov'
 
 export default {
     name: 'app',
@@ -62,7 +62,7 @@ h1 {
     margin: 2rem 0;
 }
 .app__logo {
-    width: 2rem;
+    width: 2.5rem;
     margin-right: 1rem;
     vertical-align: middle;
 }
@@ -71,5 +71,9 @@ h1 {
     span {
         vertical-align: middle;
     }
+}
+
+.video-wrapper {
+    padding-top: 2rem;
 }
 </style>

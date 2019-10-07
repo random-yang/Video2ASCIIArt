@@ -1,6 +1,6 @@
 # video2asciiart
 
-<img src="./src/assets/logo.png" width="100px" align=center/>
+<img src="./src/assets/logo.png" width="100px" align="center"/>
 
 ## 如何引用/安装
 
@@ -29,10 +29,13 @@ npm install video2asciiart-vue --save
 ```
 
 ```vue
-import Video2ASCIIArt from 'Video2ASCIIArt'
 <template>
     <Video2ASCIIArt />
 </template>
+<script>
+import Video2ASCIIArt from 'Video2ASCIIArt'
+</script>
+<style></style>
 ```
 
 ## 关于 demo 页面
