@@ -1,13 +1,9 @@
 <template>
-    <div class="asciiart-container">
-        <video :src="videoURL" class="asciiart__video" controls="controls" ref="videoDOMRef"></video>
-        <canvas
-            :width="canvasW"
-            :height="canvasH"
-            :class="{'asciiart__canvas--playing': isPlay}"
-            class="asciiart__canvas"
-            ref="canvasDOMRef"
-        ></canvas>
+    <div :class="customClass" class="asciiart-container">
+        <div class="asciiart__video">
+            <slot></slot>
+        </div>
+        <canvas :width="canvasW" :height="canvasH" class="asciiart__canvas" ref="canvasDOMRef"></canvas>
     </div>
 </template>
 
@@ -18,21 +14,17 @@ import EventHandler from '../../utils/EventHandler.js'
 export default {
     name: 'Video2ASCIIArt',
     props: {
-        videoElementOption: {
-            type: Object,
-            default() {
-                return {
-                    crossOrigin: ''
-                }
-            }
-        },
-        videoURL: {
-            type: String,
-            default: ''
-        },
         charPPI: {
             type: [Number, String],
             default: 1
+        },
+        src: {
+            type: String,
+            default: ''
+        },
+        customClass: {
+            type: String,
+            default: ''
         }
     },
     data() {
@@ -48,11 +40,11 @@ export default {
         }
     },
     mounted() {
-        this.setCanvasRect()
         this.canvas = this.$refs.canvasDOMRef
-        this.video = this.$refs.videoDOMRef
-        this.video.crossOrigin = this.videoElementOption.crossOrigin
+        this.video = this.$slots.default[0].elm // 从插槽获取 DOM Video
+        this.setCanvasRect()
 
+        // 非指令事件绑定
         this.handlers.push(
             new EventHandler(this.video, 'canplay', () => {
                 this.processor =
@@ -68,14 +60,12 @@ export default {
                 this.loop()
             })
         )
-
         this.handlers.push(
             new EventHandler(this.video, 'pause', () => {
                 this.isPlay = false
                 cancelAnimationFrame(this.animationHook)
             })
         )
-
         this.handlers.push(
             new EventHandler(this.video, 'ended', () => {
                 this.isPlay = false
@@ -95,11 +85,8 @@ export default {
     },
     methods: {
         setCanvasRect() {
-            this.$refs.videoDOMRef.addEventListener('canplay', () => {
-                const {
-                    width,
-                    height
-                } = this.$refs.videoDOMRef.getBoundingClientRect()
+            this.video.addEventListener('canplay', () => {
+                const { width, height } = this.video.getBoundingClientRect()
                 this.canvasW = width
                 this.canvasH = height
             })
@@ -117,30 +104,22 @@ export default {
 
 <style scoped lang="scss">
 .asciiart-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
-    align-items: center;
+    position: relative;
 }
 
 .asciiart__video {
-    width: 80%;
-    transition: box-shadow 0.3s ease-out;
-    &:hover {
-        box-shadow: 4px 10px 30px rgba(0, 0, 0, 0.3);
+    video {
+        width: 100%;
     }
+    opacity: 0;
+    font-size: 0; // 去除空白间隔
 }
 
 .asciiart__canvas {
-    &--single-mode {
-        position: absolute;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-    }
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
     background: black;
-    &--playing {
-        // background: while;
-    }
 }
 </style>

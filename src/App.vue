@@ -4,8 +4,17 @@
             <img class="app__logo" src="./assets/logo.png" alt="logo">
             <span>Video2ASCIIArt DEMO</span>
         </h1>
-        <div class="video-wrapper">
-            <Video2ASCIIArt :videoURL="videoURL" :charPPI="charPPI"/>
+        <div class="app__main">
+            <video
+                :src="videoURL"
+                ref="videoDOM"
+                class="app__video"
+                controls="controls"
+                crossorigin=""
+            ></video>
+            <Video2ASCIIArt :customClass="customClass" :charPPI="charPPI" :src="videoURL">
+                <video :src="videoURL" ref="videoDOM" controls="controls" crossorigin=""></video>
+            </Video2ASCIIArt>
         </div>
     </div>
 </template>
@@ -23,11 +32,13 @@ export default {
     data() {
         return {
             videoURL,
-            charPPI: 1
+            charPPI: 1,
+            customClass: 'app__video'
         }
     },
     mounted() {
         this.initDatGui()
+        this.$refs.videoDOM.cloneNode(true)
     },
     methods: {
         initDatGui() {
@@ -73,7 +84,19 @@ h1 {
     }
 }
 
-.video-wrapper {
+.app__video {
+    width: 80%;
+    transition: box-shadow 0.3s ease-out;
+    &:hover {
+        box-shadow: 4px 10px 30px rgba(0, 0, 0, 0.3);
+    }
+}
+
+.app__main {
     padding-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
 }
 </style>
