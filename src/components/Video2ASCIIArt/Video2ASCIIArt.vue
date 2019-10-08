@@ -1,9 +1,14 @@
 <template>
-    <div :class="customClass" class="asciiart-container">
-        <div class="asciiart__video">
+    <div style="width: 100%; position: relative;">
+        <div style="opacity: 0; font-size: 0;">
             <slot></slot>
         </div>
-        <canvas :width="canvasW" :height="canvasH" class="asciiart__canvas" ref="canvasDOMRef"></canvas>
+        <canvas
+            style="position: absolute;top: 0;left: 0;pointer-events: none;"
+            ref="canvasDOMRef"
+            :width="canvasW"
+            :height="canvasH"
+        ></canvas>
     </div>
 </template>
 
@@ -18,11 +23,11 @@ export default {
             type: [Number, String],
             default: 1
         },
-        src: {
+        color: {
             type: String,
-            default: ''
+            default: '#000000'
         },
-        customClass: {
+        src: {
             type: String,
             default: ''
         }
@@ -50,7 +55,8 @@ export default {
                 this.processor =
                     this.processor ||
                     new Processor(this.video, this.canvas, {
-                        charPPI: +this.charPPI
+                        charPPI: +this.charPPI,
+                        color: this.color
                     })
             })
         )
@@ -103,23 +109,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.asciiart-container {
-    position: relative;
-}
-
-.asciiart__video {
-    video {
-        width: 100%;
-    }
-    opacity: 0;
-    font-size: 0; // 去除空白间隔
-}
-
-.asciiart__canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    background: black;
-}
 </style>

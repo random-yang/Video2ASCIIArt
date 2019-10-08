@@ -39,7 +39,7 @@ export default class Processor {
      */
     constructor(video, canvas, options) {
         this.video = video
-        this.options = { charPPI: 1, ...options }
+        this.options = { charPPI: 1, color: '#000000', ...options }
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
 
@@ -57,9 +57,10 @@ export default class Processor {
     }
 
     drawChars(chars, fontSize = 10) {
+        const { color } = this.options
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.font = `${fontSize}px Courier`
-        this.ctx.fillStyle = `#ffffff`
+        this.ctx.fillStyle = color
 
         chars.split('\n').forEach((row, index) => {
             this.ctx.fillText(row, 0, index * fontSize)

@@ -5,16 +5,14 @@
             <span>Video2ASCIIArt DEMO</span>
         </h1>
         <div class="app__main">
-            <video
-                :src="videoURL"
-                ref="videoDOM"
-                class="app__video"
-                controls="controls"
-                crossorigin=""
-            ></video>
-            <Video2ASCIIArt :customClass="customClass" :charPPI="charPPI" :src="videoURL">
-                <video :src="videoURL" ref="videoDOM" controls="controls" crossorigin=""></video>
-            </Video2ASCIIArt>
+            <div class="grid-cell">
+                <video :src="videoURL" ref="videoDOM" class="" controls="controls" crossorigin=""></video>
+            </div>
+            <div class="grid-cell">
+                <Video2ASCIIArt :charPPI="charPPI" :color="color">
+                    <video :src="videoURL" ref="videoDOM" controls="controls" crossorigin=""></video>
+                </Video2ASCIIArt>
+            </div>
         </div>
     </div>
 </template>
@@ -33,7 +31,7 @@ export default {
         return {
             videoURL,
             charPPI: 1,
-            customClass: 'app__video'
+            color: 'rgba(0,0,0,1)'
         }
     },
     mounted() {
@@ -84,11 +82,15 @@ h1 {
     }
 }
 
-.app__video {
+.grid-cell {
     width: 80%;
+    font-size: 0;
     transition: box-shadow 0.3s ease-out;
     &:hover {
         box-shadow: 4px 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    video {
+        width: 100%;
     }
 }
 
