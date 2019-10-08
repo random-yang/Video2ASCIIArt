@@ -40,8 +40,7 @@ export default {
             video: null,
             animationHook: null,
             processor: null,
-            handlers: [],
-            isPlay: false
+            handlers: []
         }
     },
     mounted() {
@@ -62,20 +61,17 @@ export default {
         )
         this.handlers.push(
             new EventHandler(this.video, 'play', () => {
-                this.isPlay = true
-                this.loop()
+                this.play()
             })
         )
         this.handlers.push(
             new EventHandler(this.video, 'pause', () => {
-                this.isPlay = false
-                cancelAnimationFrame(this.animationHook)
+                this.pause()
             })
         )
         this.handlers.push(
             new EventHandler(this.video, 'ended', () => {
-                this.isPlay = false
-                cancelAnimationFrame(this.animationHook)
+                this.end()
             })
         )
     },
@@ -87,6 +83,9 @@ export default {
     watch: {
         charPPI(to) {
             this.updateCharPPI(to)
+        },
+        color(to) {
+            this.updateColor(to)
         }
     },
     methods: {
@@ -100,9 +99,22 @@ export default {
         updateCharPPI(newPPI) {
             this.processor.changeCharPPI(newPPI)
         },
+        updateColor(newColor) {
+            this.processor.changeColor(newColor)
+        },
         loop() {
             this.processor.update()
             this.animationHook = requestAnimationFrame(this.loop)
+        },
+
+        play() {
+            this.loop()
+        },
+        pause() {
+            this.end()
+        },
+        end() {
+            this.animationHook && cancelAnimationFrame(this.animationHook)
         }
     }
 }

@@ -1,12 +1,17 @@
 <template>
-    <div id="app">
-        <h1 class="app__title">
-            <img class="app__logo" src="./assets/logo.png" alt="logo">
+    <div id="app" :class="{'app--dark-mode': isDarkMode}">
+        <h1 class="app__title" :class="{'app__title--dark-mode': isDarkMode}">
+            <img
+                :class="{'app__logo--dark-mode': isDarkMode }"
+                class="app__logo"
+                src="./assets/logo.png"
+                alt="logo"
+            >
             <span>Video2ASCIIArt DEMO</span>
         </h1>
         <div class="app__main">
             <div class="grid-cell">
-                <video :src="videoURL" ref="videoDOM" class="" controls="controls" crossorigin=""></video>
+                <video :src="videoURL" ref="videoDOM" controls="controls" crossorigin=""></video>
             </div>
             <div class="grid-cell">
                 <Video2ASCIIArt :charPPI="charPPI" :color="color">
@@ -18,20 +23,21 @@
 </template>
 
 <script>
-import Video2ASCIIArt from './components/Video2ASCIIArt'
 import * as dat from 'dat.gui'
 import videoURL from './assets/KBHD.mov'
+import { Video2ASCIIArt } from '../src/index'
 
 export default {
-    name: 'app',
     components: {
         Video2ASCIIArt
     },
+    name: 'app',
     data() {
         return {
             videoURL,
             charPPI: 1,
-            color: 'rgba(0,0,0,1)'
+            color: 'rgb(120,120,120)',
+            isDarkMode: true
         }
     },
     mounted() {
@@ -42,18 +48,25 @@ export default {
         initDatGui() {
             let gui = new dat.GUI()
             let data = this.$data
+
+            gui.add(data, 'isDarkMode')
             gui.add(data, 'charPPI', {
                 '@x0.5': 0.25,
                 '@x1': 0.5,
                 '@x2': 1,
                 '@x4': 2
             })
+            gui.addColor(data, 'color')
         }
     }
 }
 </script>
 
 <style lang='scss'>
+@mixin transition-mix($name) {
+    transition: $name 0.3s ease-in-out;
+}
+
 *,
 *::before,
 *::after {
@@ -66,28 +79,43 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     text-align: center;
+    width: 100%;
+    min-height: 100vh;
+    @include transition-mix(background);
 }
-h1 {
-    margin: 2rem 0;
+
+.app--dark-mode {
+    background: black;
 }
+
 .app__logo {
     width: 2.5rem;
     margin-right: 1rem;
     vertical-align: middle;
+
+    @include transition-mix(filter);
+    &--dark-mode {
+        filter: invert(1);
+    }
 }
 
 .app__title {
+    padding: 2rem 0;
+    @include transition-mix(color);
     span {
         vertical-align: middle;
+    }
+    &--dark-mode {
+        color: white;
     }
 }
 
 .grid-cell {
     width: 80%;
     font-size: 0;
-    transition: box-shadow 0.3s ease-out;
+    @include transition-mix(box-shadow);
     &:hover {
-        box-shadow: 4px 10px 30px rgba(0, 0, 0, 0.3);
+        box-shadow: 4px 10px 30px -10px rgba(0, 0, 0, 0.3);
     }
     video {
         width: 100%;
@@ -98,7 +126,14 @@ h1 {
     padding-top: 2rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
     justify-items: center;
     align-items: center;
+}
+
+@media (max-width: 1000px) {
+    .app__main {
+        grid-template-columns: 1fr;
+    }
 }
 </style>

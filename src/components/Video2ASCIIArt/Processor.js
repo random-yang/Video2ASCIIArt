@@ -51,9 +51,17 @@ export default class Processor {
     }
 
     changeCharPPI(newCharPPI) {
-        const { charPPI } = this.options
-        if (!charPPI) return
-        this.options.charPPI = newCharPPI
+        const options = { charPPI: newCharPPI }
+        this.changeOptions(options)
+    }
+
+    changeColor(newColor) {
+        const options = { color: newColor }
+        this.changeOptions(options)
+    }
+
+    changeOptions(newOption = {}) {
+        this.options = { ...this.options, ...newOption }
     }
 
     drawChars(chars, fontSize = 10) {
