@@ -50,7 +50,7 @@ export default class Processor {
         this.frameLoader.height = this.canvas.height
     }
 
-    changeCharPPI(newCharPPI) {
+    changecharPpi(newCharPPI) {
         const options = { charPPI: newCharPPI }
         this.changeOptions(options)
     }

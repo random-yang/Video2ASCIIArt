@@ -12,10 +12,32 @@ npm install video2asciiart-vue --save
 
 ### CDN `<script>` 标签引入
 
-在你的页面中插入`script`标签
-
 ```html
-<script src="url">
+<meta charset="utf-8" />
+<title>Video2ASCIIArt demo</title>
+<!-- import vue -->
+<script src="https://unpkg.com/vue"></script>
+<!-- import the component -->
+<script src="./Video2ASCIIArt.umd.js"></script>
+
+<div id="app">
+    <!-- 注意html中用 “连字符” 替代 “驼峰”-->
+    <demo :char-ppi="charPpi" :color="color">
+        <video src="your/video/url" controls="controls" crossorigin=""></video>
+    </demo>
+</div>
+
+<script>
+    new Vue({
+        components: {
+            demo: Video2ASCIIArt
+        },
+        data: {
+            charPpi: 2,
+            color: 'gray'
+        }
+    }).$mount('#app')
+</script>
 ```
 
 查看[codepen]()live demo

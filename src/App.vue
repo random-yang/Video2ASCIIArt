@@ -14,7 +14,7 @@
                 <video :src="videoURL" ref="videoDOM" controls="controls" crossorigin=""></video>
             </div>
             <div class="grid-cell">
-                <Video2ASCIIArt :charPPI="charPPI" :color="color">
+                <Video2ASCIIArt :charPpi="charPpi" :color="color">
                     <video :src="videoURL" ref="videoDOM" controls="controls" crossorigin=""></video>
                 </Video2ASCIIArt>
             </div>
@@ -35,7 +35,7 @@ export default {
     data() {
         return {
             videoURL,
-            charPPI: 1,
+            charPpi: 1,
             color: 'rgb(120,120,120)',
             isDarkMode: true
         }
@@ -50,7 +50,7 @@ export default {
             let data = this.$data
 
             gui.add(data, 'isDarkMode')
-            gui.add(data, 'charPPI', {
+            gui.add(data, 'charPpi', {
                 '@x0.5': 0.25,
                 '@x1': 0.5,
                 '@x2': 1,

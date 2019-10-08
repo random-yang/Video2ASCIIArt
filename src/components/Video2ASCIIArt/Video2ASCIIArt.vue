@@ -19,17 +19,13 @@ import EventHandler from '../../utils/EventHandler.js'
 export default {
     name: 'Video2ASCIIArt',
     props: {
-        charPPI: {
+        charPpi: {
             type: [Number, String],
             default: 1
         },
         color: {
             type: String,
             default: '#000000'
-        },
-        src: {
-            type: String,
-            default: ''
         }
     },
     data() {
@@ -54,7 +50,7 @@ export default {
                 this.processor =
                     this.processor ||
                     new Processor(this.video, this.canvas, {
-                        charPPI: +this.charPPI,
+                        charPpi: +this.charPpi,
                         color: this.color
                     })
             })
@@ -81,8 +77,8 @@ export default {
         })
     },
     watch: {
-        charPPI(to) {
-            this.updateCharPPI(to)
+        charPpi(to) {
+            this.updatecharPpi(to)
         },
         color(to) {
             this.updateColor(to)
@@ -96,8 +92,8 @@ export default {
                 this.canvasH = height
             })
         },
-        updateCharPPI(newPPI) {
-            this.processor.changeCharPPI(newPPI)
+        updatecharPpi(newPPI) {
+            this.processor.changecharPpi(newPPI)
         },
         updateColor(newColor) {
             this.processor.changeColor(newColor)
