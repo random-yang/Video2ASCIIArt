@@ -11,11 +11,11 @@
         </h1>
         <div class="app__main">
             <div class="grid-cell">
-                <video :src="videoURL" ref="videoDOM" controls="controls" crossorigin=""></video>
+                <video :src="videoURL" controls="controls" crossorigin=""></video>
             </div>
             <div class="grid-cell">
-                <Video2ASCIIArt :charPpi="charPpi" :color="color">
-                    <video :src="videoURL" ref="videoDOM" controls="controls" crossorigin=""></video>
+                <Video2ASCIIArt :charppi="charPpi" :color="color">
+                    <video :src="videoURL" controls="controls" crossorigin=""></video>
                 </Video2ASCIIArt>
             </div>
         </div>

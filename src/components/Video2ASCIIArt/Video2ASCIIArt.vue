@@ -1,14 +1,11 @@
 <template>
-    <div style="width: 100%; position: relative;">
-        <div style="opacity: 0; font-size: 0;">
+    <div class="asciiart__main">
+        <div class="asciiart__video">
             <slot></slot>
         </div>
-        <canvas
-            style="position: absolute;top: 0;left: 0;pointer-events: none;"
-            ref="canvasDOMRef"
-            :width="canvasW"
-            :height="canvasH"
-        ></canvas>
+        <div class="asciiart__canvas">
+            <canvas ref="canvasDOMRef" :width="canvasW" :height="canvasH"></canvas>
+        </div>
     </div>
 </template>
 
@@ -19,7 +16,7 @@ import EventHandler from '../../utils/EventHandler.js'
 export default {
     name: 'Video2ASCIIArt',
     props: {
-        charPpi: {
+        charppi: {
             type: [Number, String],
             default: 1
         },
@@ -50,7 +47,7 @@ export default {
                 this.processor =
                     this.processor ||
                     new Processor(this.video, this.canvas, {
-                        charPpi: +this.charPpi,
+                        charppi: +this.charppi,
                         color: this.color
                     })
             })
@@ -77,14 +74,19 @@ export default {
         })
     },
     watch: {
-        charPpi(to) {
-            this.updatecharPpi(to)
+        charppi(to) {
+            this.updatecharppi(to)
         },
         color(to) {
             this.updateColor(to)
         }
     },
     methods: {
+        loop() {
+            this.processor.update()
+            this.animationHook = requestAnimationFrame(this.loop)
+        },
+
         setCanvasRect() {
             this.video.addEventListener('canplay', () => {
                 const { width, height } = this.video.getBoundingClientRect()
@@ -92,15 +94,11 @@ export default {
                 this.canvasH = height
             })
         },
-        updatecharPpi(newPPI) {
-            this.processor.changecharPpi(newPPI)
+        updatecharppi(newPPI) {
+            this.processor.changecharppi(newPPI)
         },
         updateColor(newColor) {
             this.processor.changeColor(newColor)
-        },
-        loop() {
-            this.processor.update()
-            this.animationHook = requestAnimationFrame(this.loop)
         },
 
         play() {
@@ -117,4 +115,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.asciiart__main {
+    width: 100%;
+    position: relative;
+}
+
+.asciiart__video {
+    opacity: 0;
+    font-size: 0;
+}
+
+.asciiart__canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
 </style>

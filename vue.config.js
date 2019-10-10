@@ -1,5 +1,6 @@
 module.exports = {
     publicPath: './',
+    css: { extract: process.env.NODE_ENV === 'lib' ? false : true },
     configureWebpack: {
         module: {
             rules: [

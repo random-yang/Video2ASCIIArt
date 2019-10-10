@@ -1,26 +1,19 @@
-<meta charset="utf-8" />
+<meta charset="utf-8">
 <title>Video2ASCIIArt demo</title>
-<script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+<script src="https://unpkg.com/vue"></script>
 <script src="./Video2ASCIIArt.umd.js"></script>
 
+<link rel="stylesheet" href="./Video2ASCIIArt.css">
+
+
 <div id="app">
-    <demo :char-ppi="charPpi" :color="color">
-        <video
-            src="../src/assets/KBHD.mov"
-            controls="controls"
-            crossorigin=""
-        ></video>
-    </demo>
+  <demo></demo>
 </div>
 
 <script>
-    new Vue({
-        components: {
-            demo: Video2ASCIIArt
-        },
-        data: {
-            charPpi: 2,
-            color: 'gray'
-        }
-    }).$mount('#app')
+new Vue({
+  components: {
+    demo: Video2ASCIIArt
+  }
+}).$mount('#app')
 </script>

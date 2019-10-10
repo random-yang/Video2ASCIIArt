@@ -39,7 +39,7 @@ export default class Processor {
      */
     constructor(video, canvas, options) {
         this.video = video
-        this.options = { charPPI: 1, color: '#000000', ...options }
+        this.options = { charppi: 1, color: '#000000', ...options }
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
 
@@ -50,8 +50,8 @@ export default class Processor {
         this.frameLoader.height = this.canvas.height
     }
 
-    changecharPpi(newCharPPI) {
-        const options = { charPPI: newCharPPI }
+    changecharppi(newCharppi) {
+        const options = { charppi: newCharppi }
         this.changeOptions(options)
     }
 
@@ -98,9 +98,9 @@ export default class Processor {
         let imgDataHeight = imageData.height
         let chars = ''
 
-        const { charPPI } = this.options
-        const dh = 10 / charPPI
-        const dw = 6 / charPPI
+        const { charppi } = this.options
+        const dh = 10 / charppi
+        const dw = 6 / charppi
         for (let h = 0; h < imgDataHeight; h += dh) {
             for (let w = 0; w < imgDataWidth; w += dw) {
                 let index = (w + imgDataWidth * h) * 4 // r b g a = 4个宽度
@@ -124,8 +124,8 @@ export default class Processor {
         this.getFrameFromVideo()
         // frame 信息转换为字符串
         const chars = this.frameToChar()
-        const { charPPI } = this.options
+        const { charppi } = this.options
         // 绘制到 canvas 上下文
-        this.drawChars(chars, 10 / charPPI)
+        this.drawChars(chars, 10 / charppi)
     }
 }
