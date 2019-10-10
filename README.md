@@ -21,9 +21,12 @@ npm install video2asciiart-vue --save
 <script src="./Video2ASCIIArt.umd.js"></script>
 
 <div id="app">
-    <!-- 注意html中用 “连字符” 替代 “驼峰”-->
-    <demo :char-ppi="charPpi" :color="color">
-        <video src="your/video/url" controls="controls" crossorigin=""></video>
+    <demo charppi="2" color="gray">
+        <video
+            src="../../your/video/url"
+            controls="controls"
+            crossorigin=""
+        ></video>
     </demo>
 </div>
 
@@ -45,51 +48,62 @@ npm install video2asciiart-vue --save
 ## 如何使用
 
 [实际效果演示]()
-
-```js
-// main.js
-```
+xxx.vue
 
 ```vue
 <template>
-    <Video2ASCIIArt />
+    <div class="container">
+        <Video2ASCIIArt>
+            <video :src="videoURL" controls="controls" crossorigin=""></video>
+        </Video2ASCIIArt>
+    </div>
 </template>
 <script>
 import Video2ASCIIArt from 'Video2ASCIIArt'
+
+export default {
+    components: {
+        Video2ASCIIArt
+    }
+}
 </script>
-<style></style>
+<style>
+...;
+</style>
 ```
 
-## 关于 demo 页面
+## 贡献代码
+
+### 安装依赖
 
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### 快速开发
 
 ```
 yarn run serve
 ```
 
-### Compiles and minifies for production
+### 同时构建 demo 和组件
 
 ```
 yarn run build
 ```
 
-### Run your tests
+### 单独构建组件
 
 ```
-yarn run test
+yarn run build:lib
 ```
 
-### Lints and fixes files
+### 单独构建 demo
 
 ```
-yarn run lint
+yarn run build:demo
 ```
 
-### Customize configuration
+### 修改构建配置
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
+查看 [Configuration Reference](https://cli.vuejs.org/config/).
