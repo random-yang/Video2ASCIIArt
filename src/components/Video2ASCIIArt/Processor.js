@@ -39,8 +39,8 @@ export default class Processor {
      */
     constructor(video, canvas, options) {
         this.video = video
+        this.options = { charppi: 1, color: '#000000', ...options }
         this.canvas = canvas
-        this.options = { charPPI: 1, ...options }
         this.ctx = canvas.getContext('2d')
 
         this.frameLoader = document.createElement('canvas') // 提取视频帧
@@ -50,14 +50,25 @@ export default class Processor {
         this.frameLoader.height = this.canvas.height
     }
 
-    changeCharPPI(newRate) {
-        if (!this.options.charPPI) return
-        this.options.charPPI = newRate
+    changecharppi(newCharppi) {
+        const options = { charppi: newCharppi }
+        this.changeOptions(options)
+    }
+
+    changeColor(newColor) {
+        const options = { color: newColor }
+        this.changeOptions(options)
+    }
+
+    changeOptions(newOption = {}) {
+        this.options = { ...this.options, ...newOption }
     }
 
     drawChars(chars, fontSize = 10) {
+        const { color } = this.options
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.ctx.font = `${fontSize}px Courier`
+        this.ctx.fillStyle = color
 
         chars.split('\n').forEach((row, index) => {
             this.ctx.fillText(row, 0, index * fontSize)
@@ -69,8 +80,8 @@ export default class Processor {
             this.video,
             0,
             0,
-            this.canvas.width,
-            this.canvas.height
+            this.frameLoader.width,
+            this.frameLoader.height
         )
     }
 
@@ -87,9 +98,9 @@ export default class Processor {
         let imgDataHeight = imageData.height
         let chars = ''
 
-        const { charPPI } = this.options
-        const dh = 10 / charPPI
-        const dw = 6 / charPPI
+        const { charppi } = this.options
+        const dh = 10 / charppi
+        const dw = 6 / charppi
         for (let h = 0; h < imgDataHeight; h += dh) {
             for (let w = 0; w < imgDataWidth; w += dw) {
                 let index = (w + imgDataWidth * h) * 4 // r b g a = 4个宽度
@@ -111,7 +122,10 @@ export default class Processor {
     update() {
         // 获取视频帧信息
         this.getFrameFromVideo()
-        let chars = this.frameToChar()
-        this.drawChars(chars, 10 / this.options.charPPI)
+        // frame 信息转换为字符串
+        const chars = this.frameToChar()
+        const { charppi } = this.options
+        // 绘制到 canvas 上下文
+        this.drawChars(chars, 10 / charppi)
     }
 }

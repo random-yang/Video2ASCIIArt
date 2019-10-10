@@ -1,7 +1,11 @@
 <template>
-    <div class="asciiart-container">
-        <video :src="videoURL" class="asciiart__video" controls="controls" ref="videoDOMRef"></video>
-        <canvas :width="canvasW" :height="canvasH" class="asciiart__canvas" ref="canvasDOMRef"></canvas>
+    <div class="asciiart__main">
+        <div class="asciiart__video">
+            <slot></slot>
+        </div>
+        <div class="asciiart__canvas">
+            <canvas ref="canvasDOMRef" :width="canvasW" :height="canvasH"></canvas>
+        </div>
     </div>
 </template>
 
@@ -12,21 +16,13 @@ import EventHandler from '../../utils/EventHandler.js'
 export default {
     name: 'Video2ASCIIArt',
     props: {
-        videoElementOption: {
-            type: Object,
-            default() {
-                return {
-                    crossOrigin: ''
-                }
-            }
-        },
-        videoURL: {
-            type: String,
-            default: ''
-        },
-        charPPI: {
+        charppi: {
             type: [Number, String],
             default: 1
+        },
+        color: {
+            type: String,
+            default: '#000000'
         }
     },
     data() {
@@ -41,34 +37,34 @@ export default {
         }
     },
     mounted() {
-        this.setCanvasRect()
         this.canvas = this.$refs.canvasDOMRef
-        this.video = this.$refs.videoDOMRef
-        this.video.crossOrigin = this.videoElementOption.crossOrigin
+        this.video = this.$slots.default[0].elm // 从插槽获取 DOM Video
+        this.setCanvasRect()
 
+        // 非指令事件绑定
         this.handlers.push(
             new EventHandler(this.video, 'canplay', () => {
-                this.processor = new Processor(this.video, this.canvas, {
-                    charPPI: this.charPPI
-                })
+                this.processor =
+                    this.processor ||
+                    new Processor(this.video, this.canvas, {
+                        charppi: +this.charppi,
+                        color: this.color
+                    })
             })
         )
-
         this.handlers.push(
             new EventHandler(this.video, 'play', () => {
-                this.draw()
+                this.play()
             })
         )
-
         this.handlers.push(
             new EventHandler(this.video, 'pause', () => {
-                cancelAnimationFrame(this.animationHook)
+                this.pause()
             })
         )
-
         this.handlers.push(
             new EventHandler(this.video, 'ended', () => {
-                cancelAnimationFrame(this.animationHook)
+                this.end()
             })
         )
     },
@@ -78,41 +74,55 @@ export default {
         })
     },
     watch: {
-        charPPI(to) {
-            this.updateCharPPI(to)
+        charppi(to) {
+            this.updatecharppi(to)
+        },
+        color(to) {
+            this.updateColor(to)
         }
     },
     methods: {
+        loop() {
+            this.processor.update()
+            this.animationHook = requestAnimationFrame(this.loop)
+        },
+
         setCanvasRect() {
-            this.$refs.videoDOMRef.addEventListener('canplay', () => {
-                const {
-                    width,
-                    height
-                } = this.$refs.videoDOMRef.getBoundingClientRect()
+            this.video.addEventListener('canplay', () => {
+                const { width, height } = this.video.getBoundingClientRect()
                 this.canvasW = width
                 this.canvasH = height
             })
         },
-        draw() {
-            this.processor.update()
-            this.animationHook = requestAnimationFrame(this.draw)
+        updatecharppi(newPPI) {
+            this.processor.changecharppi(newPPI)
         },
-        updateCharPPI(newPPI) {
-            this.processor.changeCharPPI(newPPI)
+        updateColor(newColor) {
+            this.processor.changeColor(newColor)
+        },
+
+        play() {
+            this.loop()
+        },
+        pause() {
+            this.end()
+        },
+        end() {
+            this.animationHook && cancelAnimationFrame(this.animationHook)
         }
     }
 }
 </script>
 
 <style scoped lang="scss">
-.asciiart-container {
+.asciiart__main {
     width: 100%;
     position: relative;
 }
 
 .asciiart__video {
-    width: 100%;
     opacity: 0;
+    font-size: 0;
 }
 
 .asciiart__canvas {
