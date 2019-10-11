@@ -12,4 +12,4 @@ if (typeof window !== 'undefined' && window.Vue) {
     install(window.Vue)
 }
 
-export { install, Video2ASCIIArt }
+export default Video2ASCIIArt

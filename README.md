@@ -67,9 +67,7 @@ export default {
     }
 }
 </script>
-<style>
-...;
-</style>
+<style></style>
 ```
 
 ## 贡献代码

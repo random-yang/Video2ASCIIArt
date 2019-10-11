@@ -1,8 +1,22 @@
 {
     "name": "video2asciiart",
     "version": "0.1.0",
+    "maintainers": [
+        {
+            "name": "YangCongming",
+            "email": "decoderyang@gmail.com"
+        }
+    ],
+    "keywords": [
+        "funny",
+        "interesting",
+        "asciiart",
+        "vue"
+    ],
     "private": false,
-    "main": "",
+    "main": "src/index.js",
+    "license": "MIT",
+    "readmeFilename": "README.md",
     "scripts": {
         "serve": "vue-cli-service serve",
         "build": "yarn run build:demo && yarn run build:lib",
