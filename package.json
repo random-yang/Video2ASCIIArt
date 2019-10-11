@@ -18,8 +18,9 @@
     "license": "MIT",
     "readmeFilename": "README.md",
     "scripts": {
+        "serve": "cross-env NODE_ENV=development webpack-dev-server --open firefox --config webpack.config.js",
         "build": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress",
-        "serve": "cross-env NODE_ENV=development webpack-dev-server --open firefox --config webpack.config.js"
+        "analyze": "NODE_ENV=production npm_config_report=true yarn run build"
     },
     "dependencies": {
         "core-js": "^2.6.5",
@@ -43,8 +44,10 @@
         "postcss-loader": "^3.0.0",
         "sass-loader": "^8.0.0",
         "style-loader": "^1.0.0",
+        "url-loader": "^2.2.0",
         "vue-loader": "^15.7.1",
         "vue-template-compiler": "^2.6.10",
+        "webpack-bundle-analyzer": "^3.5.2",
         "webpack-cli": "^3.3.9",
         "webpack-dev-server": "^3.8.2"
     },

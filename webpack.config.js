@@ -2,41 +2,48 @@ const path = require('path')
 const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin') // 清空构建目录
+const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 抽离css
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer') //
 
 module.exports = {
     mode: 'production',
     entry: path.resolve(__dirname, './src/main.js'),
     output: {
         path: path.resolve(__dirname, 'dist'),
-        publicPath: './', // 区分server和发布环境
-        filename: 'bundle.js',
-        chunkFilename: '[name].js'
+        publicPath: '/', // 区分server和发布环境
+        filename: 'js/[name].[hash:8].js',
+        chunkFilename: 'js/[name].[hash:8].js'
     },
+    // optimization: {
+    //     splitChunks: {
+    //         chunks: 'all'
+    //     }
+    // },
     optimization: {
         splitChunks: {
-            chunks: 'all'
+            cacheGroups: {
+                vendors: {
+                    name: 'chunk-vendors',
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10,
+                    chunks: 'initial'
+                },
+                common: {
+                    name: 'chunk-common',
+                    minChunks: 2,
+                    priority: -20,
+                    chunks: 'initial',
+                    reuseExistingChunk: true
+                }
+            }
         }
     },
     module: {
         rules: [
             {
-                test: /\.css$/,
-                use: [
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            importLoaders: 1
-                        }
-                    },
-                    'postcss-loader'
-                ]
-            },
-            {
                 test: /\.scss$/,
                 use: [
-                    // 'vue-style-loader',
                     process.env.NODE_ENV !== 'production'
                         ? 'vue-style-loader'
                         : MiniCssExtractPlugin.loader,
@@ -65,11 +72,38 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.(png|jpg|gif|svg|mov|mp4)$/,
-                loader: 'file-loader',
-                options: {
-                    name: '[name].[ext]'
-                }
+                test: /\.(jpe?g|png|gif)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 4096,
+                            fallback: {
+                                loader: 'file-loader',
+                                options: {
+                                    name: 'img/[name].[hash:8].[ext]'
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(mov|mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 4096,
+                            fallback: {
+                                loader: 'file-loader',
+                                options: {
+                                    name: 'media/[name].[hash:8].[ext]'
+                                }
+                            }
+                        }
+                    }
+                ]
             }
         ]
     },
@@ -81,10 +115,7 @@ module.exports = {
     },
     devServer: {
         inline: true,
-        hot: true,
-        overlay: {
-            errors: true // 如果有编译错误的话直接显示到页面上
-        }
+        hot: true
     },
     devtool: 'cheap-eval-source-map',
     plugins: [
@@ -92,12 +123,23 @@ module.exports = {
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: 'public/index.html',
-            inject: 'body'
+            template: 'public/index.html'
         }),
         new webpack.HotModuleReplacementPlugin(),
         new MiniCssExtractPlugin({
-            filename: '[name].css'
+            filename: 'css/[name].css'
+        }),
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'server',
+            analyzerHost: '127.0.0.1',
+            analyzerPort: 8889,
+            reportFilename: 'report.html',
+            defaultSizes: 'parsed',
+            openAnalyzer: true,
+            generateStatsFile: false,
+            statsFilename: 'stats.json',
+            statsOptions: null,
+            logLevel: 'info'
         })
     ]
 }
