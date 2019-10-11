@@ -42,7 +42,6 @@ export default {
     },
     mounted() {
         this.initDatGui()
-        this.$refs.videoDOM.cloneNode(true)
     },
     methods: {
         initDatGui() {
