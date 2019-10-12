@@ -11,11 +11,11 @@
         </h1>
         <div class="app__main">
             <div class="grid-cell">
-                <video :src="videoURL" controls="controls" crossorigin=""></video>
+                <video src="./assets/KBHD.mov" controls="controls" crossorigin=""></video>
             </div>
             <div class="grid-cell">
                 <Video2ASCIIArt :charppi="charppi" :color="color">
-                    <video :src="videoURL" controls="controls" crossorigin=""></video>
+                    <video src="./assets/KBHD.mov" controls="controls" crossorigin=""></video>
                 </Video2ASCIIArt>
             </div>
         </div>
@@ -24,7 +24,6 @@
 
 <script>
 import * as dat from 'dat.gui'
-import videoURL from './assets/KBHD.mov'
 import Video2ASCIIArt from '../src/index'
 
 export default {
@@ -34,7 +33,6 @@ export default {
     name: 'app',
     data() {
         return {
-            videoURL,
             charppi: 1,
             color: 'rgb(120,120,120)',
             isDarkMode: true
