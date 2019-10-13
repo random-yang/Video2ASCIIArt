@@ -10,7 +10,7 @@
 
     <body>
         <div id="app">
-            <p>{{ text }}</p>
+            <h1>DEMO</h1>
             <demo charppi="2" color="red">
                 <video
                     style="width: 100%"
@@ -25,7 +25,7 @@
         console.log(Video2ASCIIArt)
         new Vue({
             components: {
-                demo: Video2ASCIIArt.default
+                demo: Video2ASCIIArt
             },
             data: {
                 text: 'hello world'

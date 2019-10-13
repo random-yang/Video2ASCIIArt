@@ -1,6 +1,4 @@
 const path = require('path')
-// const merge = require('webpack-merge')
-// const webpackProd = require('./webpack.config')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin') // 拷贝不需要webpack处理的静态资源
 const { CleanWebpackPlugin } = require('clean-webpack-plugin') // 清空构建目录
@@ -15,6 +13,7 @@ module.exports = {
         publicPath: '/lib/',
         filename: 'Video2ASCIIArt.umd.js',
         library: 'Video2ASCIIArt', // 模块名称
+        libraryExport: 'default',
         libraryTarget: 'umd' // 输出格式
     },
     externals: {
