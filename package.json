@@ -1,6 +1,6 @@
 {
     "name": "video2asciiart",
-    "version": "0.1.0",
+    "version": "0.1.2",
     "maintainers": [
         {
             "name": "YangCongming",
@@ -14,13 +14,14 @@
         "vue"
     ],
     "private": false,
-    "main": "src/index.js",
+    "main": "lib/Video2ASCIIArt.umd.js",
     "license": "MIT",
     "readmeFilename": "README.md",
     "scripts": {
         "serve": "cross-env NODE_ENV=development webpack-dev-server --open firefox --config ./script/webpack.dev.js",
         "build": "cross-env NODE_ENV=production webpack --config ./script/webpack.prod.js --progress",
-        "analyze": "NODE_ENV=production webpack --config ./script/webpack.analyze.js"
+        "analyze": "NODE_ENV=production webpack --config ./script/webpack.analyze.js",
+        "lib": "NODE_ENV=production webpack --config ./script/webpack.lib.js"
     },
     "dependencies": {
         "core-js": "^2.6.5",

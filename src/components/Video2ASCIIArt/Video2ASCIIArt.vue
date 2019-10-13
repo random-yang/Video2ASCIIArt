@@ -83,8 +83,8 @@ export default {
     },
     methods: {
         loop() {
-            this.processor.update()
             this.animationHook = requestAnimationFrame(this.loop)
+            this.processor.update()
         },
 
         setCanvasRect() {
@@ -102,7 +102,7 @@ export default {
         },
 
         play() {
-            this.loop()
+            requestAnimationFrame(this.loop)
         },
         pause() {
             this.end()

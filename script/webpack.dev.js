@@ -1,10 +1,10 @@
-const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const webpackConfig = require('./webpack.config')
 
 module.exports = merge(webpackConfig, {
     mode: 'development',
+    devtool: 'cheap-eval-source-map',
     output: {
         publicPath: '/'
     },
@@ -30,6 +30,5 @@ module.exports = merge(webpackConfig, {
         inline: true,
         hot: true
     },
-    devtool: 'cheap-eval-source-map',
     plugins: [new webpack.HotModuleReplacementPlugin()]
 })

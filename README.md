@@ -2,15 +2,42 @@
 
 <img src="./src/assets/logo.png" width="100px" align="center"/>
 
-## 如何引用/安装
+## 如何使用
 
 ### 通过 npm 引入
 
+[实际效果 demo](https://officialyoungx.github.io/Video2ASCIIArt/dist/)
+
+```bash
+npm install video2asciiart
+# or
+yarn add video2asciiart
 ```
-npm install video2asciiart-vue --save
+
+xxx.vue
+
+```vue
+<template>
+    <div class="container">
+        <Video2ASCIIArt>
+            <video :src="videoURL" controls="controls" crossorigin=""></video>
+        </Video2ASCIIArt>
+    </div>
+</template>
+<script>
+import Video2ASCIIArt from 'Video2ASCIIArt'
+
+export default {
+    components: {
+        Video2ASCIIArt
+    }
+}
+</script>
 ```
 
 ### CDN `<script>` 标签引入
+
+查看 codepen[live demo]()
 
 ```html
 <meta charset="utf-8" />
@@ -22,6 +49,7 @@ npm install video2asciiart-vue --save
 
 <div id="app">
     <demo charppi="2" color="gray">
+        <!-- normal video tag -->
         <video
             src="../../your/video/url"
             controls="controls"
@@ -43,32 +71,7 @@ npm install video2asciiart-vue --save
 </script>
 ```
 
-查看[codepen]()live demo
-
 ## 如何使用
-
-[实际效果演示]()
-xxx.vue
-
-```vue
-<template>
-    <div class="container">
-        <Video2ASCIIArt>
-            <video :src="videoURL" controls="controls" crossorigin=""></video>
-        </Video2ASCIIArt>
-    </div>
-</template>
-<script>
-import Video2ASCIIArt from 'Video2ASCIIArt'
-
-export default {
-    components: {
-        Video2ASCIIArt
-    }
-}
-</script>
-<style></style>
-```
 
 ## 贡献代码
 
@@ -78,30 +81,20 @@ export default {
 yarn install
 ```
 
-### 快速开发
+### 快速开发(HMR)
 
 ```
 yarn run serve
 ```
 
-### 同时构建 demo 和组件
-
-```
-yarn run build
-```
-
-### 单独构建组件
+### 构建打包组件
 
 ```
 yarn run build:lib
 ```
 
-### 单独构建 demo
+### 构建打包 demo
 
 ```
 yarn run build:demo
 ```
-
-### 修改构建配置
-
-查看 [Configuration Reference](https://cli.vuejs.org/config/).

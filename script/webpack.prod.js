@@ -6,6 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin') // 拷贝不需要webpa
 
 module.exports = merge(webpackConfig, {
     mode: 'production',
+    devtool: 'none',
     output: {
         publicPath: './'
     },
@@ -47,14 +48,13 @@ module.exports = merge(webpackConfig, {
             }
         ]
     },
-    devtool: 'none',
     plugins: [
         new MiniCssExtractPlugin({
             filename: 'css/[name].css'
         }),
         new CopyWebpackPlugin([
             {
-                from: './public/favicon.ico',
+                from: path.resolve(__dirname, '../public/favicon.ico'),
                 to: '../dist'
             }
         ])

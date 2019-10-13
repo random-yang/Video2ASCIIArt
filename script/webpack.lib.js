@@ -1,22 +1,36 @@
 const path = require('path')
+// const merge = require('webpack-merge')
+// const webpackProd = require('./webpack.config')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin') // 拷贝不需要webpack处理的静态资源
 const { CleanWebpackPlugin } = require('clean-webpack-plugin') // 清空构建目录
 
 module.exports = {
     mode: 'production',
     entry: {
-        vue: ['vue'],
-        datgui: ['dat.gui'],
-        app: [path.resolve(__dirname, '../src/main.js')]
+        Video2ASCIIArt: path.resolve(__dirname, '../src/index.js')
     },
     output: {
-        path: path.resolve(__dirname, '../dist'),
-        filename: 'js/[name].[hash:8].js',
-        chunkFilename: 'js/[name].[hash:8].js'
+        path: path.resolve(__dirname, '../lib'),
+        publicPath: '/lib/',
+        filename: 'Video2ASCIIArt.umd.js',
+        library: 'Video2ASCIIArt', // 模块名称
+        libraryTarget: 'umd' // 输出格式
+    },
+    externals: {
+        vue: 'vue'
     },
     module: {
         rules: [
+            {
+                test: /\.scss$/,
+                use: [
+                    'vue-style-loader',
+                    'css-loader',
+                    'postcss-loader',
+                    'sass-loader'
+                ]
+            },
             {
                 test: /\.vue$/,
                 loader: 'vue-loader',
@@ -42,18 +56,6 @@ module.exports = {
                         }
                     }
                 ]
-            },
-            {
-                test: /\.(mov|mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 4096,
-                            name: 'media/[name].[hash:8].[ext]'
-                        }
-                    }
-                ]
             }
         ]
     },
@@ -65,10 +67,12 @@ module.exports = {
     },
     plugins: [
         new VueLoaderPlugin(),
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: path.resolve(__dirname, '../public/index.html') // 这个地方为什么不需要 ../public/...
-        }),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new CopyWebpackPlugin([
+            {
+                from: path.resolve(__dirname, '../public/index_2.html'),
+                to: '../lib'
+            }
+        ])
     ]
 }
