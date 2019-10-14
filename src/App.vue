@@ -11,11 +11,11 @@
         </h1>
         <div class="app__main">
             <div class="grid-cell">
-                <video :src="videoURL" controls="controls" crossorigin=""></video>
+                <video src="./assets/KBHD.mov" controls="controls" crossorigin=""></video>
             </div>
             <div class="grid-cell">
-                <Video2ASCIIArt :charppi="charPpi" :color="color">
-                    <video :src="videoURL" controls="controls" crossorigin=""></video>
+                <Video2ASCIIArt :charppi="charppi" :color="color">
+                    <video src="./assets/KBHD.mov" controls="controls" crossorigin=""></video>
                 </Video2ASCIIArt>
             </div>
         </div>
@@ -24,8 +24,7 @@
 
 <script>
 import * as dat from 'dat.gui'
-import videoURL from './assets/KBHD.mov'
-import { Video2ASCIIArt } from '../src/index'
+import Video2ASCIIArt from '../src/index'
 
 export default {
     components: {
@@ -34,15 +33,13 @@ export default {
     name: 'app',
     data() {
         return {
-            videoURL,
-            charPpi: 1,
+            charppi: 1,
             color: 'rgb(120,120,120)',
             isDarkMode: true
         }
     },
     mounted() {
         this.initDatGui()
-        this.$refs.videoDOM.cloneNode(true)
     },
     methods: {
         initDatGui() {
@@ -50,7 +47,7 @@ export default {
             let data = this.$data
 
             gui.add(data, 'isDarkMode')
-            gui.add(data, 'charPpi', {
+            gui.add(data, 'charppi', {
                 '@x0.5': 0.25,
                 '@x1': 0.5,
                 '@x2': 1,

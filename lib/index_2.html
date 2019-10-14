@@ -1,0 +1,35 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <script src="../node_modules/vue/dist/vue.min.js"></script>
+        <script src="./Video2ASCIIArt.umd.js"></script>
+        <title>Document</title>
+    </head>
+
+    <body>
+        <div id="app">
+            <h1>DEMO</h1>
+            <demo charppi="2" color="red">
+                <video
+                    style="width: 100%"
+                    src="../src/assets/KBHD.mov"
+                    controls="controls"
+                    crossorigin=""
+                ></video>
+            </demo>
+        </div>
+    </body>
+    <script>
+        console.log(Video2ASCIIArt)
+        new Vue({
+            components: {
+                demo: Video2ASCIIArt
+            },
+            data: {
+                text: 'hello world'
+            }
+        }).$mount('#app')
+    </script>
+</html>
