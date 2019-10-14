@@ -1,7 +1,9 @@
 <h1 align="center">Video2ASCIIArt</h1>
 <p align="center">🎥 🎨一个将普通视频实时转换为字符画视频的Vue组件</p>
 
-<div align=center><img src="https://raw.githubusercontent.com/OfficialYoungX/Video2ASCIIArt/master/src/assets/logo.png" width="100px"/></div>
+<div align=center><img src="https://raw.githubusercontent.com/OfficialYoungX/Video2ASCIIArt/master/src/assets/showcase.png"/></div>
+
+<small>视频素材来源[KBHD](https://www.youtube.com/watch?v=OoY7zp8GkLI&t=2s)</small>
 
 ## 📒 如何使用
 
