@@ -1,6 +1,6 @@
-# video2asciiart
+<h1 align="center">Video2ASCIIArt</h1>
 
-<img src="./src/assets/logo.png" width="100px" align="center"/>
+<div align=center><img src="./src/assets/logo.png" width="100px"/></div>
 
 ## 如何使用
 
@@ -8,13 +8,11 @@
 
 [实际效果 demo](https://officialyoungx.github.io/Video2ASCIIArt/dist/)
 
-```bash
-npm install video2asciiart
+```shell
+$ npm install video2asciiart
 # or
-yarn add video2asciiart
+$ yarn add video2asciiart
 ```
-
-xxx.vue
 
 ```vue
 <template>
@@ -25,7 +23,7 @@ xxx.vue
     </div>
 </template>
 <script>
-import Video2ASCIIArt from 'Video2ASCIIArt'
+import Video2ASCIIArt from 'video2asciiart'
 
 export default {
     components: {
@@ -37,7 +35,7 @@ export default {
 
 ### CDN `<script>` 标签引入
 
-查看 codepen[live demo]()
+[![标签用法](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/static-rnxe4?fontsize=14)
 
 ```html
 <meta charset="utf-8" />
@@ -45,7 +43,7 @@ export default {
 <!-- import vue -->
 <script src="https://unpkg.com/vue"></script>
 <!-- import the component -->
-<script src="./Video2ASCIIArt.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/video2asciiart@0.1.2/lib/Video2ASCIIArt.umd.js"></script>
 
 <div id="app">
     <demo charppi="2" color="gray">
@@ -70,8 +68,6 @@ export default {
     }).$mount('#app')
 </script>
 ```
-
-## 如何使用
 
 ## 贡献代码
 
@@ -98,3 +94,7 @@ yarn run build:lib
 ```
 yarn run build:demo
 ```
+
+## License
+
+MIT

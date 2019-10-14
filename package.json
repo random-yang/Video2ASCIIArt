@@ -19,9 +19,9 @@
     "readmeFilename": "README.md",
     "scripts": {
         "serve": "cross-env NODE_ENV=development webpack-dev-server --open firefox --config ./script/webpack.dev.js",
-        "build": "cross-env NODE_ENV=production webpack --config ./script/webpack.prod.js --progress",
-        "analyze": "NODE_ENV=production webpack --config ./script/webpack.analyze.js",
-        "lib": "NODE_ENV=production webpack --config ./script/webpack.lib.js"
+        "build:demo": "cross-env NODE_ENV=production webpack --config ./script/webpack.prod.js --progress",
+        "build:lib": "NODE_ENV=production webpack --config ./script/webpack.lib.js",
+        "analyze": "NODE_ENV=production webpack --config ./script/webpack.analyze.js"
     },
     "dependencies": {
         "core-js": "^2.6.5",
