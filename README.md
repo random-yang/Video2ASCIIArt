@@ -1,12 +1,15 @@
 <h1 align="center">Video2ASCIIArt</h1>
+<p align="center">🎥 🎨一个将普通视频实时转换为字符画视频的Vue组件</p>
 
-<div align=center><img src="./src/assets/logo.png" width="100px"/></div>
+<div align=center><img src="https://raw.githubusercontent.com/OfficialYoungX/Video2ASCIIArt/master/src/assets/showcase.png"/></div>
 
-## 如何使用
+<small>视频素材来源[KBHD](https://www.youtube.com/watch?v=OoY7zp8GkLI&t=2s)</small>
+
+## 📒 如何使用
 
 ### 通过 npm 引入
 
-[实际效果 demo](https://officialyoungx.github.io/Video2ASCIIArt/dist/)
+[先玩一玩它](https://officialyoungx.github.io/Video2ASCIIArt/dist/)
 
 ```shell
 $ npm install video2asciiart
@@ -60,16 +63,12 @@ export default {
     new Vue({
         components: {
             demo: Video2ASCIIArt
-        },
-        data: {
-            charPpi: 2,
-            color: 'gray'
         }
     }).$mount('#app')
 </script>
 ```
 
-## 贡献代码
+## ⛏️ 贡献代码
 
 ### 安装依赖
 
