@@ -103,6 +103,7 @@ export default {
     methods: {
         loop() {
             this.animationHook = requestAnimationFrame(this.loop)
+            console.log(this.animationHook)
             this.processor.update()
         },
 
@@ -122,7 +123,7 @@ export default {
 
         play() {
             this.isPlay = true
-            requestAnimationFrame(this.loop)
+            this.animationHook = requestAnimationFrame(this.loop)
         },
         pause() {
             this.end()
@@ -159,6 +160,7 @@ export default {
 
 <style scoped lang="scss">
 .asciiart__main {
+    display: inline-block;
     width: 100%;
     position: relative;
 }
@@ -166,12 +168,19 @@ export default {
 .asciiart__video {
     visibility: hidden;
     font-size: 0;
+    video {
+        width: 100%;
+    }
 }
 
 .asciiart__canvas {
+    width: 100%;
     position: absolute;
     top: 0;
     left: 0;
+    canvas {
+        width: 100%;
+    }
 }
 
 .asciiart__layer {
@@ -217,6 +226,7 @@ export default {
     background-image: url(../../assets/pause_icon.svg);
 }
 
+// for <transition>
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.3s ease;

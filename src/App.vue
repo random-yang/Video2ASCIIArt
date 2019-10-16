@@ -1,5 +1,7 @@
 <template>
     <div id="app" :class="{'app--dark-mode': isDarkMode}">
+        <!-- fork me -->
+        <ForkMe targetUrl="https://github.com/OfficialYoungX/Video2ASCIIArt"/>
         <h1 class="app__title" :class="{'app__title--dark-mode': isDarkMode}">
             <img
                 :class="{'app__logo--dark-mode': isDarkMode }"
@@ -11,7 +13,12 @@
         </h1>
         <div class="app__main">
             <div class="grid-cell">
-                <video src="./assets/KBHD.mov" controls="controls" crossorigin=""></video>
+                <video
+                    style="width:100%"
+                    src="./assets/KBHD.mov"
+                    controls="controls"
+                    crossorigin=""
+                ></video>
             </div>
             <div class="grid-cell">
                 <Video2ASCIIArt :charppi="charppi" :color="color">
@@ -24,11 +31,13 @@
 
 <script>
 import * as dat from 'dat.gui'
-import Video2ASCIIArt from '../src/index'
+import Video2ASCIIArt from '../src/components/Video2ASCIIArt'
+import ForkMe from '../src/components/ForkMe'
 
 export default {
     components: {
-        Video2ASCIIArt
+        Video2ASCIIArt,
+        ForkMe
     },
     name: 'app',
     data() {
@@ -75,7 +84,6 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
-    text-align: center;
     width: 100%;
     min-height: 100vh;
     @include transition-mix(background);
@@ -97,7 +105,8 @@ export default {
 }
 
 .app__title {
-    padding: 2rem 0;
+    padding: 4rem 0;
+    text-align: center;
     @include transition-mix(color);
     span {
         vertical-align: middle;
@@ -114,9 +123,6 @@ export default {
     &:hover {
         box-shadow: 4px 10px 30px -10px rgba(0, 0, 0, 0.3);
     }
-    video {
-        width: 100%;
-    }
 }
 
 .app__main {
@@ -128,7 +134,7 @@ export default {
     align-items: center;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 970px) {
     .app__main {
         grid-template-columns: 1fr;
     }

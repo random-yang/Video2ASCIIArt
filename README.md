@@ -39,6 +39,7 @@ export default {
 ### CDN `<script>` 标签引入
 
 [![标签用法](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/static-rnxe4?fontsize=14)
+<small>（此在线 demo 在 safari 上可能会有问题）</small>
 
 ```html
 <meta charset="utf-8" />
@@ -68,6 +69,13 @@ export default {
 </script>
 ```
 
+### 组件属性
+
+| Props Name | Type             | Description                        |
+| ---------- | ---------------- | ---------------------------------- |
+| `charppi`  | String\|Number   | The element to trigger avatar pick |
+| `color`    | String(css like) | Url of upload croppped image       |
+
 ## ⛏️ 贡献代码
 
 ### 安装依赖
@@ -93,6 +101,13 @@ yarn run build:lib
 ```
 yarn run build:demo
 ```
+
+## 等优化
+
+-   [ ] 内存优化（目前打开开发者工具查看内存，有比较明显的阶段性内存递增和 GC，而且占用的内存较大）
+-   [ ] 丰富控件功能
+-   [ ] 增加字符画的可调节参数的维度
+-   [x] resize
 
 ## License
 
