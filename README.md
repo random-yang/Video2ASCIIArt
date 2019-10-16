@@ -9,7 +9,7 @@
 
 ### 通过 npm 引入
 
-[先玩一玩它](https://officialyoungx.github.io/Video2ASCIIArt/dist/)
+[试玩儿](https://officialyoungx.github.io/Video2ASCIIArt/dist/)
 
 ```shell
 $ npm install video2asciiart
@@ -71,10 +71,10 @@ export default {
 
 ### 组件属性
 
-| Props Name | Type             | Description                        |
-| ---------- | ---------------- | ---------------------------------- |
-| `charppi`  | String\|Number   | The element to trigger avatar pick |
-| `color`    | String(css like) | Url of upload croppped image       |
+| Props Name | Type                              | Description    |
+| ---------- | --------------------------------- | -------------- |
+| `charppi`  | <String\|Number>[0.25\|0.5\|1\|2] | 改变字符的密度 |
+| `color`    | <String\> (css like)              | 控制字符的颜色 |
 
 ## ⛏️ 贡献代码
 
