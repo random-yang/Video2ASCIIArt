@@ -1,17 +1,25 @@
 <template>
-    <div class="asciiart__main">
+    <div @mouseover="handleMouseover" @mouseout="handleMouseout" class="asciiart__main">
         <div class="asciiart__video">
             <slot></slot>
         </div>
         <div class="asciiart__canvas">
-            <canvas ref="canvasDOMRef" :width="canvasW" :height="canvasH"></canvas>
+            <canvas @click="handleControler" ref="canvasDOMRef" :width="canvasW" :height="canvasH"></canvas>
         </div>
+        <transition name="fade">
+            <div v-show="isLayerShow" class="asciiart__layer">
+                <span v-if="!isPlay" class="layer__play-button"></span>
+                <span v-else class="layer__pause-button"></span>
+            </div>
+        </transition>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
 import Processor from './Processor.js'
 import EventHandler from '../../utils/EventHandler.js'
+import playIconPath from '../../assets/play_icon.svg'
+import pauseIconPath from '../../assets/pause_icon.svg'
 
 export default {
     name: 'Video2ASCIIArt',
@@ -33,7 +41,18 @@ export default {
             video: null,
             animationHook: null,
             processor: null,
-            handlers: []
+            handlers: [],
+            isPlay: false,
+            isHover: false
+        }
+    },
+    computed: {
+        isLayerShow() {
+            if (this.isPlay) {
+                return this.isHover
+            } else {
+                return true
+            }
         }
     },
     mounted() {
@@ -102,13 +121,37 @@ export default {
         },
 
         play() {
+            this.isPlay = true
             requestAnimationFrame(this.loop)
         },
         pause() {
             this.end()
         },
         end() {
+            this.isPlay = false
             this.animationHook && cancelAnimationFrame(this.animationHook)
+        },
+
+        // controlers event
+
+        handleControler() {
+            this.isPlay ? this.handlePause() : this.handlePlay()
+        },
+
+        handlePlay() {
+            if (this.video && this.video.play) this.video.play()
+        },
+        handlePause() {
+            if (this.video && this.video.pause) this.video.pause()
+        },
+
+        // mouse event
+        handleMouseover() {
+            this.isHover = true
+        },
+
+        handleMouseout() {
+            this.isHover = false
         }
     }
 }
@@ -121,7 +164,7 @@ export default {
 }
 
 .asciiart__video {
-    opacity: 0;
+    visibility: hidden;
     font-size: 0;
 }
 
@@ -129,6 +172,57 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
+}
+
+.asciiart__layer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    background-color: rgba(0, 0, 0, 0.6);
     pointer-events: none;
+}
+
+.layer__play-button,
+.layer__pause-button {
+    // reset style
+    // -------------
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    // -------------
+
+    width: 4rem;
+    height: 4rem;
+    opacity: 0.8;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.layer__play-button {
+    background-image: url(../../assets/play_icon.svg);
+}
+
+.layer__pause-button {
+    background-image: url(../../assets/pause_icon.svg);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s ease;
+}
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
 }
 </style>
