@@ -103,7 +103,6 @@ export default {
     methods: {
         loop() {
             this.animationHook = requestAnimationFrame(this.loop)
-            console.log(this.animationHook)
             this.processor.update()
         },
 

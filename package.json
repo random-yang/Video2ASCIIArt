@@ -17,6 +17,10 @@
     "main": "lib/Video2ASCIIArt.umd.js",
     "license": "MIT",
     "readmeFilename": "README.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/OfficialYoungX/Video2ASCIIArt"
+    },
     "scripts": {
         "serve": "cross-env NODE_ENV=development webpack-dev-server --open firefox --config ./script/webpack.dev.js",
         "build:demo": "cross-env NODE_ENV=production webpack --config ./script/webpack.prod.js --progress",
@@ -66,11 +70,6 @@
         "rules": {},
         "parserOptions": {
             "parser": "babel-eslint"
-        }
-    },
-    "postcss": {
-        "plugins": {
-            "autoprefixer": {}
         }
     },
     "browserslist": [
