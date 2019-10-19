@@ -5,6 +5,11 @@
 
 <small>视频素材来源[KBHD](https://www.youtube.com/watch?v=OoY7zp8GkLI&t=2s)</small>
 
+![npm version](https://img.shields.io/npm/v/video2asciiart?style=flat-square)
+![week download](https://img.shields.io/npm/dw/video2asciiart?style=flat-square)
+
+[English]('./README-en.md')\|[中文]('./README.md')
+
 ## 📒 如何使用
 
 ### 通过 npm 引入
@@ -71,12 +76,14 @@ export default {
 
 ### 组件属性
 
-| Props Name | Type                              | Description    |
-| ---------- | --------------------------------- | -------------- |
-| `charppi`  | <String\|Number>[0.25\|0.5\|1\|2] | 改变字符的密度 |
-| `color`    | <String\> (css like)              | 控制字符的颜色 |
+| Props Name | Type            | Default   | Description                     |
+| ---------- | --------------- | --------- | ------------------------------- |
+| charppi    | `String|Number` | `1`       | 改变字符的密度[0.25\|0.5\|1\|2] |
+| color      | `String`        | `#000000` | 控制字符的颜色 (css like)       |
 
 ## ⛏️ 贡献代码
+
+欢迎 pr && issue！
 
 ### 安装依赖
 
@@ -102,7 +109,7 @@ yarn run build:lib
 yarn run build:demo
 ```
 
-## 等优化
+## TODO
 
 -   [ ] 内存优化（目前打开开发者工具查看内存，有比较明显的阶段性内存递增和 GC，而且占用的内存较大）
 -   [ ] 丰富控件功能

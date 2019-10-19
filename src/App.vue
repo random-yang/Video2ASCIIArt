@@ -44,25 +44,29 @@ export default {
         return {
             charppi: 1,
             color: 'rgb(120,120,120)',
-            isDarkMode: true
+            isDarkMode: true,
+            gui: null
         }
     },
     mounted() {
         this.initDatGui()
     },
+    destroyed() {
+        this.gui.destroy()
+    },
     methods: {
         initDatGui() {
-            let gui = new dat.GUI()
+            this.gui = new dat.GUI()
             let data = this.$data
 
-            gui.add(data, 'isDarkMode')
-            gui.add(data, 'charppi', {
+            this.gui.add(data, 'isDarkMode')
+            this.gui.add(data, 'charppi', {
                 '@x0.5': 0.25,
                 '@x1': 0.5,
                 '@x2': 1,
                 '@x4': 2
             })
-            gui.addColor(data, 'color')
+            this.gui.addColor(data, 'color')
         }
     }
 }
