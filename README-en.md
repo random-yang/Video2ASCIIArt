@@ -8,7 +8,7 @@
 ![npm version](https://img.shields.io/npm/v/video2asciiart?style=flat-square)
 ![week download](https://img.shields.io/npm/dw/video2asciiart?style=flat-square)
 
-[English]('https://github.com/OfficialYoungX/Video2ASCIIArt/blob/master/README-en.md')\|[中文]('https://github.com/OfficialYoungX/Video2ASCIIArt/blob/master/README.md')
+[English](./README-en.md)\|[中文](./README.md)
 
 ## 📒 Usage
 
