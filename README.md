@@ -8,7 +8,7 @@
 ![npm version](https://img.shields.io/npm/v/video2asciiart?style=flat-square)
 ![week download](https://img.shields.io/npm/dw/video2asciiart?style=flat-square)
 
-[English]('./README-en.md')\|[中文]('./README.md')
+[English]('https://github.com/OfficialYoungX/Video2ASCIIArt/blob/master/README-en.md')\|[中文]('https://github.com/OfficialYoungX/Video2ASCIIArt/blob/master/README.md')
 
 ## 📒 如何使用
 
@@ -76,10 +76,10 @@ export default {
 
 ### 组件属性
 
-| Props Name | Type            | Default   | Description                     |
-| ---------- | --------------- | --------- | ------------------------------- |
-| charppi    | `String|Number` | `1`       | 改变字符的密度[0.25\|0.5\|1\|2] |
-| color      | `String`        | `#000000` | 控制字符的颜色 (css like)       |
+| Props Name | Type             | Default   | Description                     |
+| ---------- | ---------------- | --------- | ------------------------------- |
+| charppi    | `String\|Number` | `1`       | 改变字符的密度[0.25\|0.5\|1\|2] |
+| color      | `String`         | `#000000` | 控制字符的颜色 (css like)       |
 
 ## ⛏️ 贡献代码
 

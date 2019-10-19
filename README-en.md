@@ -8,7 +8,7 @@
 ![npm version](https://img.shields.io/npm/v/video2asciiart?style=flat-square)
 ![week download](https://img.shields.io/npm/dw/video2asciiart?style=flat-square)
 
-[English]('./README-en.md')\|[中文]('./README.md')
+[English]('https://github.com/OfficialYoungX/Video2ASCIIArt/blob/master/README-en.md')\|[中文]('https://github.com/OfficialYoungX/Video2ASCIIArt/blob/master/README.md')
 
 ## 📒 Usage
 
@@ -77,10 +77,10 @@ Export default {
 
 ### Component Attributes
 
-| Props Name | Type            | Default   | Description                                        |
-| ---------- | --------------- | --------- | -------------------------------------------------- |
-| charppi    | `String|Number` | `1`       | Change the density of characters [0.25\|0.5\|1\|2] |
-| color      | `String`        | `#000000` | Controlling the color of characters (css like)     |
+| Props Name | Type             | Default   | Description                                        |
+| ---------- | ---------------- | --------- | -------------------------------------------------- |
+| charppi    | `String\|Number` | `1`       | Change the density of characters [0.25\|0.5\|1\|2] |
+| color      | `String`         | `#000000` | Controlling the color of characters (css like)     |
 
 ## Contributing
 
