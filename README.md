@@ -8,7 +8,7 @@
 ![npm version](https://img.shields.io/npm/v/video2asciiart?style=flat-square)
 ![week download](https://img.shields.io/npm/dw/video2asciiart?style=flat-square)
 
-[English](./README-en.md)\|[中文](./README.md)
+[English](./README-en.md) \| [中文](./README.md)
 
 ## 📒 如何使用
 

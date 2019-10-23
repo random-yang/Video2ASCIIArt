@@ -1,5 +1,5 @@
 <h1 align="center">Video2ASCIIArt</h1>
-<p align="center">🎥 🎨A Vue component that converts ordinary video into character-picture video in real time</p>
+<p align="center">🎥 🎨A Vue component that converts ordinary video into ASCII-Art-video in real time</p>
 
 <div align=center><img src="https://raw.githubusercontent.com/OfficialYoungX/Video2ASCIIArt/master/src/assets/showcase.png"/></div>
 
@@ -8,7 +8,7 @@
 ![npm version](https://img.shields.io/npm/v/video2asciiart?style=flat-square)
 ![week download](https://img.shields.io/npm/dw/video2asciiart?style=flat-square)
 
-[English](./README-en.md)\|[中文](./README.md)
+[English](./README-en.md) \| [中文](./README.md)
 
 ## 📒 Usage
 
