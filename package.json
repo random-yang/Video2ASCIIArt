@@ -3,7 +3,7 @@
     "version": "0.1.4",
     "maintainers": [
         {
-            "name": "YangCongming",
+            "name": "RandomYang",
             "email": "decoderyang@gmail.com"
         }
     ],
@@ -30,11 +30,11 @@
         "analyze": "NODE_ENV=production webpack --config ./script/webpack.analyze.js"
     },
     "dependencies": {
-        "core-js": "^2.6.5",
         "dat.gui": "^0.7.6",
         "vue": "^2.6.10"
     },
     "devDependencies": {
+        "core-js": "^2.6.5",
         "autoprefixer": "^9.6.4",
         "babel-eslint": "^10.0.1",
         "clean-webpack-plugin": "^3.0.0",
